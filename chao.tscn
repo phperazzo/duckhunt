@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://8quln2hlsrcn"]
+
+[ext_resource type="Texture2D" uid="uid://dsyd8ntstwx73" path="res://Material Duck Hunt/chao.png" id="1_i8edm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6k2nq"]
+size = Vector2(768, 18)
+
+[node name="chao" type="Area2D" unique_id=1103187229]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=43338864]
+texture = ExtResource("1_i8edm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=97181749]
+shape = SubResource("RectangleShape2D_6k2nq")
