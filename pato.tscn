@@ -1,0 +1,141 @@
+[gd_scene format=3 uid="uid://ci5d3mlp3nbx3"]
+
+[ext_resource type="Texture2D" uid="uid://dcy5jqeugdvqv" path="res://Material Duck Hunt/pato/cima/sprite_0.png" id="1_458by"]
+[ext_resource type="Texture2D" uid="uid://bkkleyfbieeyh" path="res://Material Duck Hunt/pato/cima/sprite_1.png" id="2_ny35s"]
+[ext_resource type="Texture2D" uid="uid://cyebyouci1uhn" path="res://Material Duck Hunt/pato/cima/sprite_2.png" id="3_evpki"]
+[ext_resource type="Texture2D" uid="uid://blad7npmtbkrm" path="res://Material Duck Hunt/pato/lado/sprite_0.png" id="4_5p5ea"]
+[ext_resource type="Texture2D" uid="uid://ccgsgolhyytf6" path="res://Material Duck Hunt/pato/lado/sprite_1.png" id="5_yvygc"]
+[ext_resource type="Texture2D" uid="uid://bthrfpovgrkn0" path="res://Material Duck Hunt/pato/lado/sprite_2.png" id="6_030ok"]
+[ext_resource type="Texture2D" uid="uid://ccvfcxcbwsl1c" path="res://Material Duck Hunt/pato/morte/0.png" id="7_ywi7w"]
+[ext_resource type="Texture2D" uid="uid://chmjfkaf5wd1s" path="res://Material Duck Hunt/pato/morte/1.png" id="8_vw86d"]
+[ext_resource type="Texture2D" uid="uid://bf7adr62suh8j" path="res://Material Duck Hunt/pato/morte/2.png" id="9_wwo8d"]
+[ext_resource type="Texture2D" uid="uid://bcucch54c3sqh" path="res://Material Duck Hunt/pato/morte/3.png" id="10_t6mnj"]
+[ext_resource type="Texture2D" uid="uid://bfv3dc251fvn8" path="res://Material Duck Hunt/pato/susto.png" id="11_kpn0u"]
+
+[sub_resource type="GDScript" id="GDScript_qff7v"]
+script/source = "extends CharacterBody2D
+
+var lado = 1
+var vel = Vector2()
+var speed = 100
+var queda = 1
+
+func _ready():
+	randomize()
+	$movimento.wait_time = randf_range(0.4, 2)
+	$anima.wait_time = randf_range(0.6, 1)
+
+func _process(delta): 
+	position.x += speed*lado*delta
+	
+	position.y -= 140*queda*delta
+	
+	if lado < 0:
+		$AnimatedSprite2D.flip_h = true
+	else:
+		$AnimatedSprite2D.flip_h = false
+
+func _on_movimento_timeout() -> void:
+	lado = lado*(-1)
+
+
+func _on_anime_timeout() -> void:
+	if $AnimatedSprite2D.animation == \"cima\":
+		$AnimatedSprite2D.animation = \"lado\"
+	elif $AnimatedSprite2D.animation == \"lado\":
+		$AnimatedSprite2D.animation = \"cima\"
+		
+func mata():
+	$AnimatedSprite2D.animation = \"susto\"
+	queda = -1
+	lado=0
+	
+	
+	
+	
+	
+	
+"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f4ou3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_458by")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ny35s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_evpki")
+}],
+"loop": true,
+"name": &"cima",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_5p5ea")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yvygc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_030ok")
+}],
+"loop": true,
+"name": &"lado",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_ywi7w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_vw86d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_wwo8d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_t6mnj")
+}],
+"loop": true,
+"name": &"morte",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_kpn0u")
+}],
+"loop": true,
+"name": &"susto",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r3ve3"]
+radius = 48.0
+
+[node name="Pato" type="CharacterBody2D" unique_id=1053521070]
+scale = Vector2(0.8, 0.8)
+script = SubResource("GDScript_qff7v")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1434565641]
+sprite_frames = SubResource("SpriteFrames_f4ou3")
+animation = &"cima"
+frame_progress = 0.5925698
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=722076699]
+shape = SubResource("CircleShape2D_r3ve3")
+
+[node name="movimento" type="Timer" parent="." unique_id=2126820469]
+autostart = true
+
+[node name="anima" type="Timer" parent="." unique_id=1751307809]
+autostart = true
+
+[node name="morte" type="Timer" parent="." unique_id=146998421]
+wait_time = 0.2
+
+[connection signal="timeout" from="movimento" to="." method="_on_movimento_timeout"]
+[connection signal="timeout" from="anima" to="." method="_on_anime_timeout"]

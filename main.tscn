@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://b8a8ewclhghtf"]
+
+[ext_resource type="Texture2D" uid="uid://dlk1ywpikloo2" path="res://Material Duck Hunt/cenariotras.png" id="1_h2yge"]
+[ext_resource type="Texture2D" uid="uid://wofd8bmb46nc" path="res://Material Duck Hunt/cenariofrente.png" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://ci5d3mlp3nbx3" path="res://pato.tscn" id="3_lquwl"]
+
+[node name="Main" type="Node2D" unique_id=1283076783]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1944714822]
+z_index = -3
+texture = ExtResource("1_h2yge")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=159077572]
+z_index = 1
+texture = ExtResource("2_1bvp3")
+centered = false
+
+[node name="Pato" parent="." unique_id=1053521070 instance=ExtResource("3_lquwl")]
+position = Vector2(362, 615)
