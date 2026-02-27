@@ -32,8 +32,20 @@ func _on_espera_timeout() -> void:
 func _on_topo_body_entered(body: Node2D) -> void:
 	flyaway = 1
 	patosnatela -=1
+	atualizaturno()
 
 
 func _on_chao_body_entered(body: Node2D) -> void:
 	capturado += 1
 	patosnatela -=1
+	atualizaturno()
+	
+func atualizaturno():
+	print(patosnatela)
+	if (patosnatela == 0):
+		$espera.start()
+		if flyaway == 1:
+			$cao.play("rindo")
+			flyaway = 0
+		else:
+			$cao.play("captura")

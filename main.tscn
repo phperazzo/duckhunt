@@ -6,6 +6,74 @@
 [ext_resource type="PackedScene" uid="uid://crul7hk8pevjs" path="res://topo.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://ddemvw81nrlek" path="res://alvo.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://8quln2hlsrcn" path="res://chao.tscn" id="6_272bh"]
+[ext_resource type="Texture2D" uid="uid://bq17mf3mi22nw" path="res://Material Duck Hunt/cao/captura.png" id="7_5vw27"]
+[ext_resource type="Texture2D" uid="uid://c3xq6db6wuobq" path="res://Material Duck Hunt/cao/rindo.png" id="8_kek77"]
+
+[sub_resource type="Animation" id="Animation_4c57u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("captura:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(386, 554)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rindo:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(394, 553)]
+}
+
+[sub_resource type="Animation" id="Animation_efxa6"]
+resource_name = "captura"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("captura:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(394, 547), Vector2(394, 427), Vector2(394, 547)]
+}
+
+[sub_resource type="Animation" id="Animation_dg77c"]
+resource_name = "rindo"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rindo:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(394, 553), Vector2(394, 421), Vector2(394, 553)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ycdy4"]
+_data = {
+&"RESET": SubResource("Animation_4c57u"),
+&"captura": SubResource("Animation_efxa6"),
+&"rindo": SubResource("Animation_dg77c")
+}
 
 [node name="Main" type="Node2D" unique_id=1283076783]
 script = ExtResource("1_1bvp3")
@@ -33,6 +101,17 @@ position = Vector2(385, -88)
 
 [node name="chao" parent="." unique_id=1103187229 instance=ExtResource("6_272bh")]
 position = Vector2(383, 783)
+
+[node name="captura" type="Sprite2D" parent="." unique_id=1935327145]
+position = Vector2(386, 554)
+texture = ExtResource("7_5vw27")
+
+[node name="rindo" type="Sprite2D" parent="." unique_id=723423664]
+position = Vector2(394, 553)
+texture = ExtResource("8_kek77")
+
+[node name="cao" type="AnimationPlayer" parent="." unique_id=1989049600]
+libraries/ = SubResource("AnimationLibrary_ycdy4")
 
 [connection signal="timeout" from="gerapato" to="." method="_on_gerapato_timeout"]
 [connection signal="timeout" from="espera" to="." method="_on_espera_timeout"]
